@@ -1,0 +1,18 @@
+.timer-container {
+    display: flex;
+    justify-content: center;
+}
+
+.timer-eclipse {
+    display: flex;
+    width: 60%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background-color: #A1C6A0;
+}
+
+@media all and (min-width: 512px){
+    .timer-eclipse {
+        width: 30%;
+    }
+}
