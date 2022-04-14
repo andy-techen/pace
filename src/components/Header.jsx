@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../styles/Header.css';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
@@ -19,7 +18,7 @@ const Header = () => {
     };
 
     return (
-        <div className="header">
+        <div style={{ height: '15vh' }}>
             <IconButton
                 id="menu-button"
                 aria-controls={open ? 'menu' : undefined}
@@ -27,6 +26,7 @@ const Header = () => {
                 aria-expanded={open ? 'true' : undefined}
                 aria-label="menu-button"
                 onClick={handleClick}
+                sx={{ margin: '0.2rem' }}
             >
                 <MenuIcon
                     fontSize="large"
@@ -41,13 +41,17 @@ const Header = () => {
                 MenuListProps={{
                     'aria-labelledby': 'menu-button',
                 }}
+                sx={{
+                    padding: 0,
+                    color: 'white'
+                }}
             >
                 <MenuItem onClick={handleClose}>
-                    <ListItemIcon><PersonIcon fontSize="small" /></ListItemIcon>
+                    <ListItemIcon><PersonIcon fontSize="small" sx={{ color: 'white' }} /></ListItemIcon>
                     PROFILE
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                    <ListItemIcon><AnalyticsIcon fontSize="small" /></ListItemIcon>
+                    <ListItemIcon><AnalyticsIcon fontSize="small" sx={{ color: 'white' }} /></ListItemIcon>
                     STATS
                 </MenuItem>
             </Menu>
