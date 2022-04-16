@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
@@ -16,6 +17,20 @@ const Header = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const StyledMenuItem = styled(MenuItem)({
+        backgroundColor: "#A1C6A0",
+        color: 'white',
+        padding: '0 0.5rem',
+        fontSize: '0.9rem',
+        minHeight: '2.5rem !important',
+        "&:not(:last-of-type)": {
+            borderBottom: "0.1rem solid white"
+        },
+        "&:hover": {
+            backgroundColor: '#759374',
+        }
+    });
 
     return (
         <div style={{ height: '15vh' }}>
@@ -40,20 +55,21 @@ const Header = () => {
                 onClose={handleClose}
                 MenuListProps={{
                     'aria-labelledby': 'menu-button',
-                }}
-                sx={{
-                    padding: 0,
-                    color: 'white'
+                    style: { padding: 0 }
                 }}
             >
-                <MenuItem onClick={handleClose}>
-                    <ListItemIcon><PersonIcon fontSize="small" sx={{ color: 'white' }} /></ListItemIcon>
+                <StyledMenuItem onClick={handleClose} >
+                    <ListItemIcon sx={{ minWidth: "1.6rem !important" }} >
+                        <PersonIcon fontSize="small" sx={{ color: "white" }} />
+                    </ListItemIcon>
                     PROFILE
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                    <ListItemIcon><AnalyticsIcon fontSize="small" sx={{ color: 'white' }} /></ListItemIcon>
+                </StyledMenuItem>
+                <StyledMenuItem onClick={handleClose}>
+                    <ListItemIcon sx={{ minWidth: "1.6rem !important" }} >
+                        <AnalyticsIcon fontSize="small" sx={{ color: "white" }} />
+                    </ListItemIcon>
                     STATS
-                </MenuItem>
+                </StyledMenuItem>
             </Menu>
         </div>
     );
