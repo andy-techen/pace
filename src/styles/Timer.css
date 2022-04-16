@@ -1,27 +1,51 @@
 .timer-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .timer-eclipse {
-    width: 60%;
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    background-color: #E5E5E5;
-    background-image: conic-gradient(#A1C6A0 0% 25%, #E5E5E5 25% 100%);
+  width: 60%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: #e5e5e5;
+  background-image: conic-gradient(#a1c6a0 0% 0%, #e5e5e5 0% 100%);
+  /* animation-name: timer-run; */
 }
 
 .timer-inner {
-    position: absolute;
-    width: 50%;
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    background-color: white;
+  display: grid;
+  grid-template: auto 2rem 5rem 2rem auto / auto 5rem auto;
+  position: absolute;
+  width: 50%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: white;
 }
 
-@media all and (min-width: 512px){
-    .timer-eclipse {
-        width: 30%;
-    }
+.icon {
+  color: #a1c6a0;
+  font-size: 6rem !important;
+}
+
+@media all and (min-width: 700px) {
+  .timer-eclipse {
+    width: 50%;
+  }
+  .timer-inner {
+    width: 42%;
+    grid-template: auto 2rem 7rem 2rem auto / auto 7rem auto;
+  }
+  .icon {
+    font-size: 8rem !important;
+  }
+}
+
+@keyframes timer-run {
+  from {
+    background-image: conic-gradient(#a1c6a0 0% 0%, #e5e5e5 0% 100%);
+  }
+  to {
+    background-image: conic-gradient(#a1c6a0 0% 100%, #e5e5e5 100% 100%);
+  }
 }
