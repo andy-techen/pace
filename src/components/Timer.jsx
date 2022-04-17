@@ -16,7 +16,7 @@ const Timer = (props) => {
         if (props.duration > 0) {
             setDuration(props.duration);
             setCurrTime(props.duration);
-            console.log(`Timer is set for ${props.duration}`);
+            console.log(`Timer is set for ${props.duration} seconds`);
         }
         setIsRunning(false);
         props.setIsRunning(false);
@@ -29,7 +29,7 @@ const Timer = (props) => {
                 console.log(currTime);
                 setCurrTime(currTime - 1);
             }, 1000);
-        } else if (isRunning && currTime === 0) {
+        } else if (isRunning && currTime === 0 && duration > 0) {
             console.log("Time's Up!");
             setIsRunning(false);
             props.setIsRunning(false);
@@ -53,9 +53,9 @@ const Timer = (props) => {
                     setIsRunning(!isRunning);
                     props.setIsRunning(!isRunning);
                 }} sx={{ gridArea: '3 / 2' }} >
-                    {isRunning ? <PauseIcon className="icon" /> : <PlayArrowIcon className="icon" />}
+                    {(isRunning && duration > 0) ? <PauseIcon className="icon" /> : <PlayArrowIcon className="icon" />}
                 </IconButton>
-                {isRunning ? "" :
+                {(isRunning && duration > 0) ? "" :
                     <Button
                         variant="text"
                         sx={{
