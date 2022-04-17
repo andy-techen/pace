@@ -1,25 +1,23 @@
-import React, { useState } from 'react';
-import Header from './components/Header';
-import Timer from './components/Timer';
-import TimeInput from './components/TimeInput';
-import AudioButtonGroup from './components/AudioButtonGroup';
-import Notification from './components/Notification';
-import './styles/App.css';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Main from "./components/Main";
+import Profile from "./components/Profile";
+import Header from "./components/Header";
 
-function App() {
-  const [duration, setDuration] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
-  const [complete, setComplete] = useState(false);
-
+export default function App() {
   return (
     <>
       <Header />
-      <Notification complete={complete} />
-      <Timer duration={duration} setIsRunning={setIsRunning} setComplete={setComplete} />
-      <TimeInput setDuration={setDuration} />
-      <AudioButtonGroup duration={duration} isRunning={isRunning} />
+      <Router basename="/pace">
+        <Switch>
+          <Route path="/profile">
+            <Profile />
+          </Route>
+          <Route path="/stats" />
+          <Route path="/">
+            <Main />
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 }
-
-export default App;
