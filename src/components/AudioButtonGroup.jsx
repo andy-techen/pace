@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { styled } from '@mui/material/styles';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
 
 const AudioButtonGroup = (props) => {
     const [audio, setAudio] = useState('rain');
+    const audioRef = useRef(new Audio());
 
     const AudioButton = styled(ToggleButton)({
         letterSpacing: '0.2rem',
         width: '40%',
         borderRadius: '0.4rem',
-        border: '0px',
-        outline: '1px solid rgba(0, 0, 0, 0.12)',
         "&&.MuiToggleButtonGroup-grouped": {
             borderRadius: '0.4rem'
-        }
+        },
+        "&&:not(:first-of-type)": {
+            borderLeft: "1px solid rgba(0, 0, 0, 0.12)"
+        },
     });
 
     const fetchSound = (query, duration, callback) => {
-        const url = `https://freesound.org/apiv2/search/text/?query=${query}&filter=duration:%5B${duration}%20TO%20*%5D%20&fields=name,duration,url&sort=downloads_desc`
+        const url = `https://freesound.org/apiv2/search/text/?query=${query}&filter=duration:[${duration} TO *]&fields=previews&sort=downloads_desc`
         const token = process.env.REACT_APP_FREESOUND_TOKEN;
         fetch(url, {
             headers: {
@@ -35,18 +37,28 @@ const AudioButtonGroup = (props) => {
     }
 
     useEffect(() => {
-        if (props.isRunning) {
-            fetchSound(audio, props.duration, (res) => {
-                console.log(res["results"][0]);
-            });
+        fetchSound(audio, props.duration, (res) => {
+            audioRef.current.src = res["results"][0]["previews"]["preview-hq-mp3"];
+            console.log(`Audio set to ${audioRef.current.src}`);
+        });
+    }, [audio, props.duration]);
+
+    useEffect(() => {
+        if (props.isRunning && props.duration > 0) {
+            audioRef.current.play();
+        } else if (audioRef.current.src !== "") {
+            if (props.complete) audioRef.current.currentTime = 0;
+            audioRef.current.pause();
         }
-    }, [props]);
+    }, [props.isRunning]);
 
     return (
         <ToggleButtonGroup
             value={audio}
             exclusive
-            onChange={(e, newAudio) => setAudio(newAudio)}
+            onChange={(e, newAudio) => {
+                if (newAudio != null) setAudio(newAudio);
+            }}
             aria-label="select audio"
             sx={{
                 display: 'flex',
@@ -58,9 +70,9 @@ const AudioButtonGroup = (props) => {
             }}
         >
             <AudioButton value='rain' duration="20" aria-label='select-rain'>rain</AudioButton>
-            <AudioButton value='campfire' duration="20" aria-label='select-campfire'>campfire</AudioButton>
+            <AudioButton value='forest' duration="20" aria-label='select-forest'>forest</AudioButton>
             <AudioButton value='ocean' duration="20" aria-label='select-ocean'>ocean</AudioButton>
-            <AudioButton value='random' duration="20" aria-label='select-random'>random</AudioButton>
+            <AudioButton value='fire' duration="20" aria-label='select-fire'>fire</AudioButton>
         </ToggleButtonGroup>
     );
 }
