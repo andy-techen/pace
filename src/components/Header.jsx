@@ -24,13 +24,31 @@ const Header = () => {
         padding: '0 0.5rem',
         fontSize: '0.9rem',
         minHeight: '2.5rem !important',
-        "&:not(:last-of-type)": {
+        "&&:not(:last-of-type)": {
             borderBottom: "0.1rem solid white"
         },
-        "&:hover": {
+        "&&:hover": {
             backgroundColor: '#759374',
         }
     });
+
+    const openPage = (e) => {
+        console.log(e.target.textContent);
+        switch (e.target.textContent) {
+            case "TIMER": {
+                window.location.pathname = "/pace";
+                break;
+            }
+            case "PROFILE": {
+                window.location.pathname = "/pace/profile";
+                break;
+            }
+            case "STATS": {
+                window.location.pathname = "/pace/stats";
+                break;
+            }
+        }
+    }
 
     return (
         <div style={{ height: '15vh' }}>
@@ -57,14 +75,30 @@ const Header = () => {
                     'aria-labelledby': 'menu-button',
                     style: { padding: 0 }
                 }}
+                elevation={0}
             >
-                <StyledMenuItem onClick={handleClose} >
+                <StyledMenuItem onClick={(e) => {
+                    openPage(e);
+                    handleClose();
+                }} >
+                    <ListItemIcon sx={{ minWidth: "1.6rem !important" }} >
+                        <PersonIcon fontSize="small" sx={{ color: "white" }} />
+                    </ListItemIcon>
+                    TIMER
+                </StyledMenuItem>
+                <StyledMenuItem onClick={(e) => {
+                    openPage(e);
+                    handleClose();
+                }} >
                     <ListItemIcon sx={{ minWidth: "1.6rem !important" }} >
                         <PersonIcon fontSize="small" sx={{ color: "white" }} />
                     </ListItemIcon>
                     PROFILE
                 </StyledMenuItem>
-                <StyledMenuItem onClick={handleClose}>
+                <StyledMenuItem onClick={(e) => {
+                    openPage(e);
+                    handleClose();
+                }} >
                     <ListItemIcon sx={{ minWidth: "1.6rem !important" }} >
                         <AnalyticsIcon fontSize="small" sx={{ color: "white" }} />
                     </ListItemIcon>
