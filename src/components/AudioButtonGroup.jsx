@@ -50,7 +50,7 @@ const AudioButtonGroup = (props) => {
             if (props.complete) audioRef.current.currentTime = 0;
             audioRef.current.pause();
         }
-    }, [props.isRunning]);
+    }, [props]);
 
     return (
         <ToggleButtonGroup
