@@ -15,7 +15,7 @@
 
 .timer-inner {
   display: grid;
-  grid-template: auto 2rem 5rem 2rem auto / auto 5rem auto;
+  grid-template: auto 2rem 35% 2rem auto / auto 35% auto;
   position: absolute;
   width: 50%;
   aspect-ratio: 1 / 1;
