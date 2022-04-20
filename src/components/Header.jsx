@@ -5,8 +5,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import TimerIcon from '@mui/icons-material/Timer';
 import PersonIcon from '@mui/icons-material/Person';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
 
 const Header = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -41,10 +41,6 @@ const Header = () => {
             }
             case "PROFILE": {
                 window.location.pathname = "/pace/profile";
-                break;
-            }
-            case "STATS": {
-                window.location.pathname = "/pace/stats";
                 break;
             }
         }
@@ -82,7 +78,7 @@ const Header = () => {
                     handleClose();
                 }} >
                     <ListItemIcon sx={{ minWidth: "1.6rem !important" }} >
-                        <PersonIcon fontSize="small" sx={{ color: "white" }} />
+                        <TimerIcon fontSize="small" sx={{ color: "white" }} />
                     </ListItemIcon>
                     TIMER
                 </StyledMenuItem>
@@ -94,15 +90,6 @@ const Header = () => {
                         <PersonIcon fontSize="small" sx={{ color: "white" }} />
                     </ListItemIcon>
                     PROFILE
-                </StyledMenuItem>
-                <StyledMenuItem onClick={(e) => {
-                    openPage(e);
-                    handleClose();
-                }} >
-                    <ListItemIcon sx={{ minWidth: "1.6rem !important" }} >
-                        <AnalyticsIcon fontSize="small" sx={{ color: "white" }} />
-                    </ListItemIcon>
-                    STATS
                 </StyledMenuItem>
             </Menu>
         </div>
