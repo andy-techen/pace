@@ -22,7 +22,7 @@ const Notification = (props) => {
     useEffect(() => {
         if (props.complete) {
             setOpen(true);
-            console.log("Congrats on completing a session!");
+            console.log("Hooray! You've completed a session!");
         }
     }, [props.complete]);
 
