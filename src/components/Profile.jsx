@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { db, storage } from '../firebase';
 import Fab from '@mui/material/Fab';
 import UploadIcon from '@mui/icons-material/Upload';
@@ -17,35 +17,6 @@ const Profile = () => {
     const nameRef = useRef();
     const userId = localStorage.getItem("userId");
 
-    useEffect(() => {
-        db.ref(`/users/${userId}/`)
-            .once('value')
-            .then((snap) => {
-                if (snap.exists()) {
-                    setProfile(snap.val());
-                }
-            });
-        
-        db.ref("sessions")
-            .once('value')
-            .then((snap) => {
-                setStats(calcStats(snap.val()));
-            });
-    }, []);
-
-    useEffect(() => {
-        nameRef.current.focus();
-    }, [editable]);
-
-    useEffect(() => {
-        if (profile.name || profile.img) {
-            console.log(profile);
-            let updates = {}
-            updates[`/users/${userId}`] = profile;
-            db.ref('/').update(updates);
-        }
-    }, [profile]);
-
     const uploadImg = async (file, type) => {
         storage.ref()
             .child(`${userId}.${type}`)
@@ -62,7 +33,7 @@ const Profile = () => {
             });
     }
 
-    const calcStats = (objs) => {
+    const calcStats = useCallback((objs) => {
         const targetObj = Object.values(objs).filter(obj => obj.user_id === userId);
         const sessions = targetObj.length;
         // convert to yyyy-MM-dd in local timezone
@@ -76,7 +47,36 @@ const Profile = () => {
         const lengthStr = `${String(Math.floor(length / 60)).padStart(2, '0')}:${String(Math.round(length % 60)).padStart(2, '0')}`;
 
         return {sessions: sessions, lastSession: lastSessionDate, length: lengthStr}
-    };
+    }, [userId]);
+
+    useEffect(() => {
+        db.ref(`/users/${userId}/`)
+            .once('value')
+            .then((snap) => {
+                if (snap.exists()) {
+                    setProfile(snap.val());
+                }
+            });
+        
+        db.ref("sessions")
+            .once('value')
+            .then((snap) => {
+                setStats(calcStats(snap.val()));
+            });
+    }, [userId, calcStats]);
+
+    useEffect(() => {
+        nameRef.current.focus();
+    }, [editable]);
+
+    useEffect(() => {
+        if (profile.name || profile.img) {
+            console.log(profile);
+            let updates = {}
+            updates[`/users/${userId}`] = profile;
+            db.ref('/').update(updates);
+        }
+    }, [profile, userId]);
 
     return (
         <div>
@@ -104,6 +104,7 @@ const Profile = () => {
                     </label>
                     {profile.img && (
                         <img
+                            alt="profile-img"
                             src={profile.img}
                             style={{ width: '100%' }}
                         />
