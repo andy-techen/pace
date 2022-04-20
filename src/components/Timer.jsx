@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { db } from '../firebase';
 import IconButton from '@mui/material/IconButton';
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -11,6 +12,7 @@ const Timer = (props) => {
     const [isRunning, setIsRunning] = useState(false);
     const timerRef = useRef();
     let timerPct = (1 - (currTime / duration)) * 100;
+    const userId = localStorage.getItem("userId");
 
     useEffect(() => {
         if (props.duration > 0) {
@@ -34,6 +36,14 @@ const Timer = (props) => {
             setIsRunning(false);
             props.setIsRunning(false);
             props.setComplete(true);
+            let session = {}
+            const sessionId = db.ref('/').child('sessions').push().key;
+            session[`/sessions/${sessionId}`] = {
+                timestamp: Date.now(),
+                user_id: userId,
+                length: duration
+            };
+            db.ref('/').update(session);
             setCurrTime(duration);
         }
         return () => {
