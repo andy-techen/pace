@@ -37,7 +37,7 @@ const Profile = () => {
         const targetObj = Object.values(objs).filter(obj => obj.user_id === userId);
         const sessions = targetObj.length;
         // convert to yyyy-MM-dd in local timezone
-        const lastSession = targetObj.reduce((prev, curr) => (prev.a < curr.a) ? prev : curr);
+        const lastSession = targetObj.reduce((prev, curr) => (prev.a < curr.a) ? prev : curr, {});
         let lastSessionDate = new Date(lastSession['timestamp']);
         const offset = lastSessionDate.getTimezoneOffset();
         lastSessionDate = new Date(lastSessionDate.getTime() - (offset * 60 * 1000));
@@ -71,7 +71,6 @@ const Profile = () => {
 
     useEffect(() => {
         if (profile.name || profile.img) {
-            console.log(profile);
             let updates = {}
             updates[`/users/${userId}`] = profile;
             db.ref('/').update(updates);
