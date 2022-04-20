@@ -43,6 +43,8 @@ const Header = () => {
                 window.location.pathname = "/pace/profile";
                 break;
             }
+            default:
+                window.location.pathname = "/pace";
         }
     }
 
