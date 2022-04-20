@@ -18,7 +18,7 @@ const Profile = () => {
     const userId = localStorage.getItem("userId");
 
     const uploadImg = async (file, type) => {
-        storage.ref()
+        await storage.ref()
             .child(`${userId}.${type}`)
             .put(file);
 
@@ -46,7 +46,7 @@ const Profile = () => {
         const length = targetObj.reduce((sum, curr) => sum + curr.length, 0) / sessions;
         const lengthStr = `${String(Math.floor(length / 60)).padStart(2, '0')}:${String(Math.round(length % 60)).padStart(2, '0')}`;
 
-        return {sessions: sessions, lastSession: lastSessionDate, length: lengthStr}
+        return { sessions: sessions, lastSession: lastSessionDate, length: lengthStr }
     }, [userId]);
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const Profile = () => {
                     setProfile(snap.val());
                 }
             });
-        
+
         db.ref("sessions")
             .once('value')
             .then((snap) => {
@@ -70,6 +70,7 @@ const Profile = () => {
     }, [editable]);
 
     useEffect(() => {
+        console.log(profile);
         if (profile.name || profile.img) {
             let updates = {}
             updates[`/users/${userId}`] = profile;
@@ -86,6 +87,7 @@ const Profile = () => {
                             id="upload-img"
                             name="upload-img"
                             type="file"
+                            accept="image/*"
                             style={{ display: 'none' }}
                             onChange={(e) => {
                                 const img = e.target.files[0];
@@ -104,8 +106,8 @@ const Profile = () => {
                     {profile.img && (
                         <img
                             alt="profile-img"
+                            className='profile-img'
                             src={profile.img}
-                            style={{ width: '100%' }}
                         />
                     )}
                 </div>
