@@ -1,0 +1,47 @@
+.profile-container {
+  display: grid;
+  grid-template-rows: 4rem 4rem 10rem;
+  grid-template-columns: 10% auto 8rem auto 10%;
+}
+
+.profile-img-container {
+  grid-area: 1 / 3 / 3 / 3;
+  background-color: #A1C6A0;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.profile-info {
+  grid-area: 2 / 2 / 4 / 5;
+  border-radius: 1rem;
+  background-color: white;
+  z-index: 0;
+  display: grid;
+  grid-template: 4rem 3.5rem auto / 1rem auto 1rem;
+}
+
+.stats-container {
+    grid-area: 3 / 2;
+    display: grid;
+    grid-template: auto auto / 1fr 1fr 1fr;
+    justify-items: center;
+}
+
+.stats {
+    font-size: 1rem;
+    color: #759374;
+}
+
+.profile-name {
+    display: flex;
+    grid-area: 2 / 2;
+    margin: auto;
+}
+
+.name {
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #5C5C5C;
+}
