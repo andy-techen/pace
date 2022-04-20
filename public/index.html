@@ -2,18 +2,88 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <title>Pace</title>
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.webmanifest" />
+    <meta
+      name="description"
+      content="A productivity tool, a meditation timer, and a PWA that helps me pace myself."
+    />
+    <!-- <script async src="https://cdn.jsdelivr.net/npm/pwacompat" crossorigin="anonymous"></script>
+    <script async src="https://unpkg.com/pwacompat" crossorigin="anonymous"></script> -->
     <link rel="icon" href="%PUBLIC_URL%/images/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no" />
-    <meta name="theme-color" content="#A1C6A0" />
-    <meta name="description" content="A productivity tool, a meditation timer, and a PWA that helps me pace myself." />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <meta name="theme-color" content="#DADEA9" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="Pace" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/images/apple-touch-icon.png" />
-    <meta name="msapplication-TileImage" content="%PUBLIC_URL%/images/icon192.png" />
-    <meta name="msapplication-TileColor" content="#A1C6A0" />
-    <link rel="apple-touch-startup-image" href="%PUBLIC_URL%/images/startup.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>Pace</title>
+    <link
+      rel="apple-touch-icon"
+      href="%PUBLIC_URL%/images/apple-touch-icon.png"
+    />
+    <meta
+      name="msapplication-TileImage"
+      content="%PUBLIC_URL%/images/icon192.png"
+    />
+    <meta name="msapplication-TileColor" content="#DADEA9" />
+
+    <!-- splashscreens generated at https://appsco.pe/developer/splash-screens -->
+    <link
+      href="%PUBLIC_URL%/splashscreens/iphone5_splash.png"
+      media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splashscreens/iphone6_splash.png"
+      media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splashscreens/iphoneplus_splash.png"
+      media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splashscreens/iphonex_splash.png"
+      media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splashscreens/iphonexr_splash.png"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splashscreens/iphonexsmax_splash.png"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splashscreens/ipad_splash.png"
+      media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splashscreens/ipadpro1_splash.png"
+      media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splashscreens/ipadpro3_splash.png"
+      media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="%PUBLIC_URL%/splashscreens/ipadpro2_splash.png"
+      media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <style>
+      link[rel="manifest"] {
+        --pwacompat-splash-font: 24px "Roboto";
+      }
+    </style>
 
     <!-- Start Single Page Apps for GitHub Pages -->
     <script type="text/javascript">
@@ -37,7 +107,6 @@
         }
       })(window.location);
     </script>
-  
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
