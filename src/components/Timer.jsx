@@ -22,7 +22,7 @@ const Timer = (props) => {
         }
         setIsRunning(false);
         props.setIsRunning(false);
-    }, [props.duration]);
+    }, [props.duration, props.setIsRunning]);
 
     useEffect(() => {
         if (isRunning && currTime > 0) {
@@ -49,7 +49,7 @@ const Timer = (props) => {
         return () => {
             clearInterval(timerRef.current);
         }
-    }, [isRunning, currTime]);
+    }, [isRunning, currTime, duration, props.setIsRunning, props.setComplete, userId]);
 
     return (
         <div className="timer-container">
