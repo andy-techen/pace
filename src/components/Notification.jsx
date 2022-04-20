@@ -22,7 +22,7 @@ const Notification = (props) => {
     useEffect(() => {
         if (props.complete) {
             setOpen(true);
-            console.log("Hooray! You've completed a session!");
+            console.log("Session complete");
         }
     }, [props.complete]);
 
@@ -35,7 +35,7 @@ const Notification = (props) => {
             >
                 <Fade in={open}>
                     <Box sx={style}>
-                    Congrats on completing a session!
+                        Hooray! You've completed a session!
                     </Box>
                 </Fade>
             </Modal>
