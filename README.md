@@ -9,7 +9,7 @@ Amidst all the stress invoked by schoolwork, internship search, and just life in
 
 <p align="left">
   <img src="images/timer_iphone12.png" width="230" />
-  <img src="images/profile.png" width="230" />
+  <img src="images/profile_iphone12.png" width="230" />
 </p>
 
 ## Installation
