@@ -49,7 +49,7 @@ const Profile = () => {
         const lengthStr = `${String(Math.floor(length / 60)).padStart(2, '0')}:${String(Math.round(length % 60)).padStart(2, '0')}`;
 
         return { sessions: sessions, lastSession: lastSessionDate, length: lengthStr }
-    }, [userId]);
+    }, []);
 
     const calcProgress = useCallback((objs) => {
         const targetObj = Object.values(objs).filter(obj => obj.timestamp >= Date.now() - (24*60*60*1000*5));
