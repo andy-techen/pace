@@ -8,11 +8,13 @@ import SpaIcon from '@mui/icons-material/Spa';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import Tooltip from '@mui/material/Tooltip';
+import Stats from './Stats';
 import '../styles/Profile.css';
 
 const Profile = () => {
     const [profile, setProfile] = useState({ name: "", img: "" });
     const [stats, setStats] = useState({ sessions: 0, lastSession: '', length: '00:00' });
+    const [progressData, setProgressData] = useState([]);
     const [editable, setEditable] = useState(false);
     const nameRef = useRef();
     const userId = localStorage.getItem("userId");
@@ -34,7 +36,7 @@ const Profile = () => {
     }
 
     const calcStats = useCallback((objs) => {
-        const targetObj = Object.values(objs).filter(obj => obj.user_id === userId);
+        const targetObj = Object.values(objs);
         const sessions = targetObj.length;
         // convert to yyyy-MM-dd in local timezone
         const lastSession = targetObj.reduce((prev, curr) => (prev.a < curr.a) ? prev : curr, {});
@@ -49,6 +51,17 @@ const Profile = () => {
         return { sessions: sessions, lastSession: lastSessionDate, length: lengthStr }
     }, [userId]);
 
+    const calcProgress = useCallback((objs) => {
+        const targetObj = Object.values(objs).filter(obj => obj.timestamp >= Date.now() - (24*60*60*1000*5));
+        const result = targetObj.reduce((res, obj) => {
+            res[new Date(obj.timestamp).toLocaleDateString()] = res[new Date(obj.timestamp).toLocaleDateString()] || 0;
+            res[new Date(obj.timestamp).toLocaleDateString()] += obj.length / 60;
+            return res;
+        }, {});
+
+        return result;
+    }, []);
+
     useEffect(() => {
         db.ref(`/users/${userId}/`)
             .once('value')
@@ -58,19 +71,21 @@ const Profile = () => {
                 }
             });
 
-        db.ref("sessions")
+        db.ref("/sessions")
+            .orderByChild('user_id')
+            .equalTo(userId)
             .once('value')
             .then((snap) => {
                 setStats(calcStats(snap.val()));
+                setProgressData(calcProgress(snap.val()));
             });
-    }, [userId, calcStats]);
+    }, [userId, calcStats, calcProgress]);
 
     useEffect(() => {
         nameRef.current.focus();
     }, [editable]);
 
     useEffect(() => {
-        console.log(profile);
         if (profile.name || profile.img) {
             let updates = {}
             updates[`/users/${userId}`] = profile;
@@ -79,7 +94,7 @@ const Profile = () => {
     }, [profile, userId]);
 
     return (
-        <div>
+        <div className='container'>
             <div className='profile-container'>
                 <div className='profile-img-container'>
                     <label htmlFor="upload-img">
@@ -121,7 +136,7 @@ const Profile = () => {
                                 setEditable(false);
                                 setProfile((prev) => ({
                                     ...prev,
-                                    name: e.target.textContent
+                                    name: e.target.textContent.toLowerCase()
                                 }));
                             }}
                             suppressContentEditableWarning={true}
@@ -142,7 +157,7 @@ const Profile = () => {
                         <Tooltip title="Last Session" placement="top">
                             <CalendarMonthIcon fontSize='large' sx={{ color: "#5C5C5C" }} />
                         </Tooltip>
-                        <Tooltip title="Session Length" placement="top">
+                        <Tooltip title="Average Session Length" placement="top">
                             <AccessTimeIcon fontSize='large' sx={{ color: "#5C5C5C" }} />
                         </Tooltip>
                         <span className='stats'>{stats.sessions}</span>
@@ -150,6 +165,10 @@ const Profile = () => {
                         <span className='stats'>{stats.length}</span>
                     </div>
                 </div>
+            </div>
+            <div className="chart-container">
+                <h4>MY PROGRESS</h4>
+                <Stats data={progressData} />
             </div>
         </div>
     );
